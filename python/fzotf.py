@@ -6,6 +6,7 @@ import json
 import pathlib
 import shutil
 import sqlite3
+import sys
 import tempfile
 
 
@@ -104,6 +105,7 @@ if __name__ == "__main__":
             LEFT JOIN items ON itemData.itemID = items.itemID
             LEFT JOIN fields on itemData.fieldID = fields.fieldID
             LEFT JOIN itemDataValues ON itemData.valueID = itemDataValues.valueID
+            WHERE itemData.fieldID IN (110, 12, 14, 4, 5, 10, 26)
             """
         zdb_data = zdb_c.execute(zdb_data_query).fetchall()
         zdb_creators_query = """
