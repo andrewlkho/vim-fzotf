@@ -8,7 +8,7 @@ Features:
 - Uses fzf to search any part of the citation (author, journal, title etc) to 
   reduce the mental friction when recalling the article
 - Insert multiple citations at the same time using multiple selections in fzf 
-  (press <Tab>)
+  (press `TAB`)
 
 ## Intallation
 
@@ -37,7 +37,7 @@ I have
 
     imap <buffer> <C-F> <Plug>FZotF
 
-in my `ftplugin/tex.vim` which means that while in insert mode pressing Ctrl-F 
+in my `ftplugin/tex.vim` which means that while in insert mode pressing `CTRL-F`
 will bring up the interface for inserting a citation.
 
 
