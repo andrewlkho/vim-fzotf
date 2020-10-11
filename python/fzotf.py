@@ -6,7 +6,6 @@ import json
 import pathlib
 import shutil
 import sqlite3
-import sys
 import tempfile
 
 
@@ -30,10 +29,8 @@ def format_date(date):
     return date[0:4]
 
 
-def format_entry(citekey, data, creators):
+def format_entry(citekey, item_data, creators):
     """Generate a one-line string representing the item"""
-    # Transform data into a dictionary
-    item_data = {x[1]: x[2] for x in data}
     output = citekey.ljust(20)
 
     if len(creators) > 0:
@@ -108,6 +105,17 @@ if __name__ == "__main__":
             WHERE itemData.fieldID IN (110, 12, 14, 4, 5, 10, 26)
             """
         zdb_data = zdb_c.execute(zdb_data_query).fetchall()
+        zdb_data_transformed = {
+            "title": {x[0]: x[2] for x in zdb_data if x[1] == "title"},
+            "publicationTitle": {
+                x[0]: x[2] for x in zdb_data if x[1] == "publicationTitle"
+            },
+            "date": {x[0]: x[2] for x in zdb_data if x[1] == "date"},
+            "volume": {x[0]: x[2] for x in zdb_data if x[1] == "volume"},
+            "issue": {x[0]: x[2] for x in zdb_data if x[1] == "issue"},
+            "pages": {x[0]: x[2] for x in zdb_data if x[1] == "pages"},
+            "DOI": {x[0]: x[2] for x in zdb_data if x[1] == "DOI"},
+        }
         zdb_creators_query = """
             SELECT items.key, creators.lastName, itemCreators.orderIndex
             FROM itemCreators
@@ -121,7 +129,11 @@ if __name__ == "__main__":
         print(
             format_entry(
                 citekey,
-                [x for x in zdb_data if x[0] == itemKey],
+                {
+                    field: v[itemKey]
+                    for field, v in zdb_data_transformed.items()
+                    if itemKey in v
+                },
                 [x for x in zdb_creators if x[0] == itemKey],
             )
         )
