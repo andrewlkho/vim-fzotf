@@ -33,7 +33,7 @@ def format_entry(citekey, item_data, creators):
     """Generate a one-line string representing the item"""
     output = citekey.ljust(20)
 
-    if len(creators) > 0:
+    if creators:
         output = " ".join([output, format_creators(creators)]) + "."
 
     if "title" in item_data:
@@ -123,6 +123,14 @@ if __name__ == "__main__":
             LEFT JOIN creators on itemCreators.creatorID = creators.creatorID
             """
         zdb_creators = zdb_c.execute(zdb_creators_query).fetchall()
+        zdb_creators_transformed = {}
+        for row in zdb_creators:
+            if row[0] in zdb_creators_transformed:
+                zdb_creators_transformed[row[0]] = zdb_creators_transformed[row[0]] + [
+                    row
+                ]
+            else:
+                zdb_creators_transformed[row[0]] = [row]
         zdb_conn.close()
 
     for itemKey, citekey in citekeys.items():
@@ -134,6 +142,8 @@ if __name__ == "__main__":
                     for field, v in zdb_data_transformed.items()
                     if itemKey in v
                 },
-                [x for x in zdb_creators if x[0] == itemKey],
+                zdb_creators_transformed[itemKey]
+                if itemKey in zdb_creators_transformed
+                else None,
             )
         )
