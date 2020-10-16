@@ -2,6 +2,8 @@
 
 vim-fzotf: insert BibTeX citation keys from Zotero using fzf as a fuzzy finder interface.
 
+[![asciicast](https://asciinema.org/a/365803.svg)](https://asciinema.org/a/365803)
+
 Features:
 - Queries the Zotero database directly, so if an item is added to Zotero while 
   editing in vim, it is immediately available to be cited
