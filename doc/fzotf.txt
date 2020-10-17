@@ -1,0 +1,72 @@
+*fzotf.txt* insert BibTeX citation keys from Zotero using fzf
+
+Author: Andrew Ho-Lee <https://andrewho.co.uk/>
+Repo:   https://github.com/andrewlkho/vim-fzotf
+
+INTRODUCTION                                                           *fzotf*
+
+This plugin is a tool for inserting citation keys, extracted from Zotero, into
+a document (usually LaTeX).  It uses |fzf| as a fuzzy finder interface for
+selecting the citation key to insert.
+
+Features:
+
+1. Queries the Zotero database directly, so if an item is added to Zotero
+while editing in vim, it is immediately available to be cited
+
+2. Uses fzf to search any part of the citation (author, journal, title etc) to
+reduce the mental friction when recalling the article
+
+3. Insert multiple citations at the same time using multiple selections in fzf
+
+
+INSTALLATION                                              *fzotf-installation*
+
+vim-fzotf requires the Better BibTeX extension for Zotero to be installed.
+This ensures that citation keys are stable between exports.
+
+vim-fzotf also requires the fzf plugin.  If you are using vim-plug:
+>
+  Plug 'junegunn/fzotf'
+  Plug 'andrewlkho/vim-fzotf'
+<
+
+CONFIGURATION                                            *fzotf-configuration*
+
+                                                              *g:fzotf_zotdir*
+The location of the Zotero data directory. This is set in Zotero under
+Preferences > Advanced > Files and Folders > Data Directory Location. The
+default value in vim-fzotf is the Zotero-default of ~/Zotero but if you have
+changed this you can set it with:
+>
+  let g:fzotf_zotdir = '~/Documents/Zotero'
+<
+                                                             *g:fzotf_options*
+Options to pass to |fzf#run|. The default is --multi. I like to only have
+exact matches of each word as I often think in whole words when summoning up a
+citation, so I have set it to:
+>
+  let g:fzotf_options = '--multi --exact'
+<
+
+USAGE                                                            *fzotf-usage*
+
+By default, vim-fzotf does not map any keybindings.  Instead, it provides
+<Plug>FZotF.  For example, I put the following in my ftplugin/tex.vim:
+>
+  imag <buffer> <C-F> <Plug>FZotF
+>
+
+So that pressing <C-F> in insert mode launches the citation key selector.
+
+
+ISSUES                                                          *fzotf-issues*
+
+vim-fzotf works for my library, but I appreciate that many people put a
+diverse range of items in their Zotero library. If something doesn't work for
+you then please file an issue via GitHub:
+
+    https://github.com/andrewlkho/vim-fzotf/issues
+
+
+vim:tw=78:ft=help:norl:nowrap:
