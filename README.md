@@ -64,6 +64,13 @@ summoning up a citation, so I have set it to:
 
 [fzfrun]: https://github.com/junegunn/fzf/blob/master/README-VIM.md#fzfrun
 
+### `g:fzotf_pre`, `g:fzotf_sep` and `g:fzotf_post`
+
+Text to insert before and after the citations (defaults to nothing) as well as
+between each citation (defaults to a comma).  For example:
+
+    let g:fzotf_pre = '\autocite{'
+    let g:fzotf_post = '}'
 
 ## Issues
 

@@ -49,6 +49,18 @@ citation, so I have set it to:
   let g:fzotf_options = '--multi --exact'
 <
 
+                                                                 *g:fzotf_pre*
+
+Text to insert at the start each citation, defaults to nothing.
+
+                                                                 *g:fzotf_sep*
+
+Text to insert between each citation, defaults to a comma.
+
+                                                                *g:fzotf_post*
+
+Text to insert after each citation, defaults to nothing.
+
 USAGE                                                            *fzotf-usage*
 
 By default, vim-fzotf does not map any keybindings.  Instead, it provides
